@@ -22,9 +22,9 @@ app.post('/log', ( req, res ) => {
     res.status(200).json({
         msg:'Nice'
     }); 
-    
+
 })
 
-app.listen( 8080, () => {
+app.listen( process.env.PORT, () => {
     console.log('app iniciada');
 })
